@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- normalize css -->
+    <link href="assets/css/normalize.css" rel="stylesheet" />
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Poppins:wght@300&family=Poppins:wght@400&family=Poppins:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind.config.js" type="module"></script>
+    <title>Currencier</title>
+  </head>
+  <body class="font-poppins">
+    <header class="fixed top-0 w-screen z-10">
+      <div class="relative h-12 bg-yellow-primary">
+        <a
+          class="w-14 h-14 absolute transform -translate-x-1/2 left-1/2 bg-inherit rounded-full mt-0 p-1 cursor-pointer hover:scale-110 transition-all duration-300 ease-in-out"
+          href="."
+        >
+          <img src="assets/icons/dollar.svg" alt="Logo" class="w-full h-full" />
+        </a>
+      </div>
+    </header>
+    <main class="relative mt-8 bg-whitish h-80">
+      <div
+        class="converter absolute transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 w-4/5 mt-2"
+      >
+        <h1 class="m-auto text-center text-4xl">Currency Converter</h1>
+        <div class="rounded-3xl bg-inherit flex gap-4 items-center mt-4">
+          <div
+            class="converter-side relative py-12 px-8 shadow-md grow bg-white"
+          >
+            <div
+              class="dropdown absolute top-2 right-3 flex flex-col items-end"
+            >
+              <div
+                class="dropdown-toggle relative cursor-pointer w-5 h-5 py-2 px-3 hover:bg-whitish"
+              >
+                <img
+                  src="assets/icons/down.svg"
+                  alt="Select"
+                  class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full cursor-pointer opacity-80"
+                />
+              </div>
+              <div
+                class="dropdown-content hidden z-10 h-64 w-72 shadow-md outline outline-1 outline-gray-300 bg-whitish py-1 overflow-y-scroll rounded-sm"
+              >
+                <ul>
+                  <!-- <li
+                    class="dropdown-option hover:bg-white cursor-pointer px-5 py-2 flex gap-2 items-center"
+                  >
+                    <img
+                      src="https://flagcdn.com/za.svg"
+                      class="flag w-12"
+                      alt="South Africa"
+                    />
+                    <div class="flex gap-2 text-sm">
+                      <div class="curency-code font-semibold">ABC</div>
+                      <div>-</div>
+                      <div class="currency-name">Abcdegf Kkjlsd asdasdasd</div>
+                    </div>
+                  </li> -->
+                </ul>
+              </div>
+            </div>
+            <div class="flex gap-5">
+              <img
+                src="https://flagcdn.com/za.svg"
+                class="flag w-32"
+                alt="South Africa"
+              />
+              <div class="flex flex-col gap-2">
+                <div class="currency-code font-medium text-2xl"></div>
+                <!-- <div class="currency-name">Abcdefg Efghijk</div> -->
+                <div class="flex gap-1 max-w-full">
+                  <input
+                    type="number"
+                    value="1231.9"
+                    class="currency-value w-3/5 h-fit py-1 px-2 bg-whitish"
+                  />
+                  <div class="currency-name text-sm grow"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <span
+            ><img
+              src="assets/icons/exchange.svg"
+              alt="Swap"
+              class="swap-btn w-14 h-14 cursor-pointer hover:shadow-md bg-white rounded-full"
+          /></span>
+          <div
+            class="converter-side relative py-12 px-8 shadow-md grow bg-white"
+          >
+            <div
+              class="dropdown absolute top-2 right-3 flex flex-col items-end"
+            >
+              <div
+                class="dropdown-toggle relative cursor-pointer w-5 h-5 py-2 px-3 hover:bg-whitish"
+              >
+                <img
+                  src="assets/icons/down.svg"
+                  alt="Select"
+                  class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full cursor-pointer opacity-80"
+                />
+              </div>
+              <div
+                class="dropdown-content hidden z-10 h-64 w-72 shadow-md outline outline-1 outline-gray-300 bg-whitish py-1 overflow-y-scroll rounded-sm"
+              >
+                <ul>
+                  <!-- <li
+                    class="dropdown-option hover:bg-white cursor-pointer px-5 py-2 flex gap-2 items-center"
+                  >
+                    <img
+                      src="https://flagcdn.com/za.svg"
+                      class="flag w-12"
+                      alt="South Africa"
+                    />
+                    <div class="flex gap-2 text-sm">
+                      <div class="curency-code font-semibold">ABC</div>
+                      <div>-</div>
+                      <div class="currency-name">Abcdegf Kkjlsd asdasdasd</div>
+                    </div>
+                  </li> -->
+                </ul>
+              </div>
+            </div>
+            <div class="flex gap-5">
+              <img
+                src="https://flagcdn.com/za.svg"
+                class="flag w-32"
+                alt="South Africa"
+              />
+              <div class="flex flex-col gap-2">
+                <div class="currency-code font-medium text-2xl"></div>
+                <!-- <div class="currency-name">Abcdefg Efghijk</div> -->
+                <div class="flex gap-1 max-w-full">
+                  <input
+                    type="number"
+                    value="1231.9"
+                    class="currency-value w-3/5 h-fit py-1 px-2 bg-whitish"
+                  />
+                  <div class="currency-name text-sm grow"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="absolute right-0">kjk</div>
+    </main>
+    <script src="assets/js/index.js" type="module"></script>
+  </body>
+</html>
