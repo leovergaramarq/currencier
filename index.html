@@ -14,12 +14,9 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Poppins:wght@300&family=Poppins:wght@400&family=Poppins:wght@500&display=swap"
       rel="stylesheet"
     />
-    <!-- tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="assets/js/tailwind.config.js" type="module"></script>
     <title>Currencier</title>
   </head>
-  <body class="font-poppins min-h-screen pb-12">
+  <body class="font-poppins min-h-screen">
     <header class="fixed top-0 w-screen z-10">
       <div class="relative h-16 bg-yellow-primary">
         <a
@@ -30,22 +27,25 @@
         </a>
       </div>
     </header>
-    <main class="relative mt-16 bg-whitish h-80">
+    <main class="relative bg-whitish mt-12 h-96">
       <div
-        class="converter absolute transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 w-4/5 mt-2"
+        class="converter absolute transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 w-11/12 mt-2"
       >
-        <h1 class="m-auto text-center text-3xl">Currency Converter</h1>
+        <h1 class="m-auto text-center text-3xl">Currencier</h1>
+        <h2 class="m-auto text-center text-xl">
+          Convert your currencies in a few clicks
+        </h2>
         <div
           class="rounded-3xl bg-inherit flex justify-between gap-4 items-center mt-4"
         >
           <div
-            class="converter-side relative py-12 px-8 shadow-md grow bg-white max-w-[45%]"
+            class="converter-side relative py-16 px-8 shadow-md grow bg-white max-w-[45%]"
           >
             <div
-              class="dropdown absolute top-2 right-3 flex flex-col items-end"
+              class="dropdown absolute top-2 right-6 flex flex-col items-end"
             >
               <div
-                class="dropdown-toggle relative cursor-pointer w-5 h-5 py-2 px-3 hover:bg-whitish"
+                class="dropdown-toggle relative cursor-pointer w-8 h-8 py-2 px-3 hover:bg-whitish"
               >
                 <img
                   src="assets/icons/down.svg"
@@ -62,11 +62,11 @@
             <div class="currency-info flex gap-5">
               <img
                 src="https://flagcdn.com/za.svg"
-                class="flag w-32"
+                class="flag w-48"
                 alt="South Africa"
               />
               <div class="flex flex-col gap-2">
-                <div class="currency-code font-medium text-2xl"></div>
+                <div class="currency-code font-medium text-3xl"></div>
                 <div class="flex gap-1 max-w-full items-end">
                   <input
                     min="0"
@@ -75,7 +75,7 @@
                     value="1231.9"
                     class="currency-value w-3/5 h-fit py-1 px-2 bg-whitish text-xl"
                   />
-                  <div class="currency-name text-sm grow"></div>
+                  <div class="currency-name text-base grow"></div>
                 </div>
               </div>
             </div>
@@ -87,13 +87,13 @@
               class="swap-btn w-14 h-14 cursor-pointer hover:shadow-md bg-white rounded-full"
           /></span>
           <div
-            class="converter-side relative py-12 px-8 shadow-md grow bg-white max-w-[45%]"
+            class="converter-side relative py-16 px-8 shadow-md grow bg-white max-w-[45%]"
           >
             <div
-              class="dropdown absolute top-2 right-3 flex flex-col items-end"
+              class="dropdown absolute top-2 right-6 flex flex-col items-end"
             >
               <div
-                class="dropdown-toggle relative cursor-pointer w-5 h-5 py-2 px-3 hover:bg-whitish"
+                class="dropdown-toggle relative cursor-pointer w-8 h-8 py-2 px-3 hover:bg-whitish"
               >
                 <img
                   src="assets/icons/down.svg"
@@ -110,11 +110,11 @@
             <div class="currency-info flex gap-5">
               <img
                 src="https://flagcdn.com/za.svg"
-                class="flag w-32"
+                class="flag w-48"
                 alt="South Africa"
               />
               <div class="flex flex-col gap-2">
-                <div class="currency-code font-medium text-2xl"></div>
+                <div class="currency-code font-medium text-3xl"></div>
                 <div class="flex gap-1 max-w-full items-end">
                   <input
                     min="0"
@@ -123,7 +123,7 @@
                     value="1231.9"
                     class="currency-value w-3/5 h-fit py-1 px-2 bg-whitish text-xl"
                   />
-                  <div class="currency-name text-sm grow"></div>
+                  <div class="currency-name text-base grow"></div>
                 </div>
               </div>
             </div>
@@ -154,15 +154,54 @@
         </div>
       </div>
     </main>
+    <!-- <section class=" bg-exchange bg-no-repeat bg-center h-96"></section> -->
+    <section class="flex justify-end items-center px-10">
+      <div class="flex flex-col gap-10">
+        <div class="text-xl flex items-start gap-2">
+          <img src="assets/icons/check.svg" alt="" class="w-8" />
+          <div>
+            Select your currency and the currency you want to convert to.
+          </div>
+        </div>
+        <div class="text-xl flex items-start gap-2">
+          <img src="assets/icons/check.svg" alt="" class="w-8" />
+          <div>Analyze the currencies values in real time.</div>
+        </div>
+        <div class="text-xl flex items-start gap-2">
+          <img src="assets/icons/check.svg" alt="" class="w-8" />
+          <div>
+            Compare the currencies exchange rates from more than 150 countries.
+          </div>
+        </div>
+      </div>
+      <img src="assets/animations/exchange.gif" alt="" />
+    </section>
     <section class="mt-6">
-      <h1 class="m-auto text-center text-2xl">Exchange Rates</h1>
+      <h1 class="m-auto text-center text-2xl">Exchange Rates Table</h1>
       <table
-        class="m-auto mt-3 w-4/5 block overflow-x-auto overflow-y-scroll h-96 whitespace-nowrap"
+        class="m-auto mt-5 w-4/5 block overflow-x-auto overflow-y-scroll h-96 whitespace-nowrap"
       >
         <thead class=""></thead>
         <tbody class=""></tbody>
       </table>
     </section>
+    <footer class="bg-yellow-primary h-40 w-full mt-16">
+      <div class="flex justify-between items-center h-full px-10">
+        <div class="flex flex-col gap-5">
+          <h1 class="text-2xl font-medium">Currency Exchange</h1>
+        </div>
+        <div class="flex flex-col gap-5">
+          <h1 class="text-2xl font-medium">About Us</h1>
+          <h1 class="text-2xl font-medium">Contact Us</h1>
+        </div>
+        <div class="flex flex-col gap-5">
+          <h1 class="text-2xl font-medium">Privacy Policy</h1>
+          <h1 class="text-2xl font-medium">Terms & Conditions</h1>
+        </div>
+      </div>
+    </footer>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind.config.js" type="module"></script>
     <script src="assets/js/index.js" type="module"></script>
   </body>
 </html>
