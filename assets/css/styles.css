@@ -1,31 +1,27 @@
-th,
-td {
+table th,
+table td {
   border: 1px solid #ccc;
   padding: 10px;
   text-align: left;
 }
 
-th {
+table th {
   background-color: #f2f2f2;
   font-weight: bold;
 }
 
-tr:nth-child(even) {
+table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-tr:nth-child(even) td:hover {
+table tr:nth-child(even) td:hover {
   background-color: #ddd;
 }
 
-tr:nth-child(odd) td:hover {
+table tr:nth-child(odd) td:hover {
   background-color: #ddd;
 }
 
-/* tr td:hover {
-  background-color: black;
-} */
-
-.td_head {
+table .td_head {
   font-weight: bold;
 }

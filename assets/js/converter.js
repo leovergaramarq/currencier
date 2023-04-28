@@ -10,6 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const $inputs = $sides.map(($side) => $side.querySelector(".currency-value"));
   const $swapBtn = $converter.querySelector(".swap-btn");
   const $table = document.querySelector("table");
+  const $history = document.querySelector(".history");
 
   init();
 
@@ -74,6 +75,35 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     if (someParentEquals($element, $swapBtn)) {
       swapCurrencies();
+    } else if (
+      someParentEquals($element, $history.querySelector(".history-btn"))
+    ) {
+      historyOpen = !historyOpen;
+      if (historyOpen) {
+        if (!$history.classList.contains("right-0")) {
+          $history.classList.add("right-0");
+        }
+        if ($history.classList.contains("-right-64")) {
+          $history.classList.remove("-right-64");
+        }
+        $history.querySelector("img").src = "assets/icons/right.svg";
+      } else {
+        if (!$history.classList.contains("-right-64")) {
+          $history.classList.add("-right-64");
+        }
+        if ($history.classList.contains("right-0")) {
+          $history.classList.remove("right-0");
+        }
+        $history.querySelector("img").src = "assets/icons/history.svg";
+      }
+    } else if (
+      someParentEquals($element, $history.querySelector(".history-clear"))
+    ) {
+      if (history.length) {
+        history = [];
+        localStorage.setItem("history", JSON.stringify(history));
+        renderHistory();
+      }
     }
     closeDropdowns();
   });
@@ -98,6 +128,17 @@ window.addEventListener("DOMContentLoaded", () => {
         );
         currencies[idxOther].value = currencies[i].value * exchangeRate;
         $inputs[idxOther].value = currencies[idxOther].value.toFixed(2);
+        history.unshift({
+          from: currencies[i].code,
+          to: currencies[idxOther].code,
+          value: currencies[i].value.toFixed(2),
+          result: currencies[idxOther].value.toFixed(2),
+        });
+        if (history.length > 5) {
+          history.pop();
+        }
+        localStorage.setItem("history", JSON.stringify(history));
+        renderHistory();
         return;
       }
     }
@@ -109,6 +150,7 @@ window.addEventListener("DOMContentLoaded", () => {
     syncCurrenciesValues();
     genTable();
     updateTable();
+    renderHistory();
   }
 
   function swapCurrencies() {
@@ -231,6 +273,35 @@ window.addEventListener("DOMContentLoaded", () => {
     $tbody.appendChild($fragment);
   }
 
+  function renderHistory() {
+    const $historyContent = $history.querySelector(".history-content ul");
+    if (!history.length) {
+      $historyContent.innerHTML = `
+        <div class="flex justify-center items-center h-16 text-gray-500">
+          <div class="text-center">Empty</div>
+        </div>
+      `;
+      return;
+    }
+    $historyContent.innerHTML = "";
+    history.forEach((item) => {
+      const $tr = document.createElement("tr");
+      $tr.classList = "text-center hover:bg-gray-100 px-4 ";
+      $tr.innerHTML = `
+        <div class="flex w-full justify-center py-1 gap-2">
+          <div class="text-center grow">${item.from}</div>
+          <div class="text-center grow">${item.to}</div>
+        </div>
+        <div class="flex w-full justify-center py-1 gap-2">
+          <div class="overflow-x-auto text-center grow">${item.value}</div>
+          <div class="overflow-x-auto text-center grow">${item.result}</div>
+
+        </div>
+      `;
+      $historyContent.appendChild($tr);
+    });
+  }
+
   async function getExchangeRate(currencyCode1, currencyCode2) {
     return tempRates[currencyCode2] / tempRates[currencyCode1];
   }
@@ -266,6 +337,8 @@ const currencies = [
   },
 ];
 let tempRates = mock.conversion_rates;
-let history = [];
+let history = JSON.parse(localStorage.getItem("history")) || [];
+console.log(history);
+let historyOpen = false;
 
 export {};

@@ -21,23 +21,25 @@
   </head>
   <body class="font-poppins min-h-screen pb-12">
     <header class="fixed top-0 w-screen z-10">
-      <div class="relative h-12 bg-yellow-primary">
+      <div class="relative h-16 bg-yellow-primary">
         <a
-          class="w-14 h-14 absolute transform -translate-x-1/2 left-1/2 bg-inherit rounded-full p-1 cursor-pointer hover:scale-110 transition-all duration-300 ease-in-out"
+          class="w-16 h-16 absolute transform -translate-x-1/2 left-1/2 bg-inherit rounded-full p-0 cursor-pointer hover:scale-110 transition-all duration-300 ease-in-out mt-4"
           href="."
         >
           <img src="assets/icons/dollar.svg" alt="Logo" class="w-full h-full" />
         </a>
       </div>
     </header>
-    <main class="relative mt-12 bg-whitish h-80">
+    <main class="relative mt-16 bg-whitish h-80">
       <div
         class="converter absolute transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 w-4/5 mt-2"
       >
-        <h1 class="m-auto text-center text-4xl">Currency Converter</h1>
-        <div class="rounded-3xl bg-inherit flex gap-4 items-center mt-4">
+        <h1 class="m-auto text-center text-3xl">Currency Converter</h1>
+        <div
+          class="rounded-3xl bg-inherit flex justify-between gap-4 items-center mt-4"
+        >
           <div
-            class="converter-side relative py-12 px-8 shadow-md grow bg-white"
+            class="converter-side relative py-12 px-8 shadow-md grow bg-white max-w-[45%]"
           >
             <div
               class="dropdown absolute top-2 right-3 flex flex-col items-end"
@@ -54,22 +56,7 @@
               <div
                 class="dropdown-content hidden z-10 h-64 w-72 shadow-md outline outline-1 outline-gray-300 bg-whitish py-1 overflow-y-scroll rounded-sm"
               >
-                <ul>
-                  <!-- <li
-                    class="dropdown-option hover:bg-white cursor-pointer px-5 py-2 flex gap-2 items-center"
-                  >
-                    <img
-                      src="https://flagcdn.com/za.svg"
-                      class="flag w-12"
-                      alt="South Africa"
-                    />
-                    <div class="flex gap-2 text-sm">
-                      <div class="curency-code font-semibold">ABC</div>
-                      <div>-</div>
-                      <div class="currency-name">Abcdegf Kkjlsd asdasdasd</div>
-                    </div>
-                  </li> -->
-                </ul>
+                <ul></ul>
               </div>
             </div>
             <div class="currency-info flex gap-5">
@@ -100,7 +87,7 @@
               class="swap-btn w-14 h-14 cursor-pointer hover:shadow-md bg-white rounded-full"
           /></span>
           <div
-            class="converter-side relative py-12 px-8 shadow-md grow bg-white"
+            class="converter-side relative py-12 px-8 shadow-md grow bg-white max-w-[45%]"
           >
             <div
               class="dropdown absolute top-2 right-3 flex flex-col items-end"
@@ -117,22 +104,7 @@
               <div
                 class="dropdown-content hidden z-10 h-64 w-72 shadow-md outline outline-1 outline-gray-300 bg-whitish py-1 overflow-y-scroll rounded-sm"
               >
-                <ul>
-                  <!-- <li
-                    class="dropdown-option hover:bg-white cursor-pointer px-5 py-2 flex gap-2 items-center"
-                  >
-                    <img
-                      src="https://flagcdn.com/za.svg"
-                      class="flag w-12"
-                      alt="South Africa"
-                    />
-                    <div class="flex gap-2 text-sm">
-                      <div class="curency-code font-semibold">ABC</div>
-                      <div>-</div>
-                      <div class="currency-name">Abcdegf Kkjlsd asdasdasd</div>
-                    </div>
-                  </li> -->
-                </ul>
+                <ul></ul>
               </div>
             </div>
             <div class="currency-info flex gap-5">
@@ -158,7 +130,29 @@
           </div>
         </div>
       </div>
-      <div class="absolute right-0">kjk</div>
+      <div
+        class="history fixed top-20 -right-64 transition-all duration-300 ease-in-out"
+      >
+        <div class="flex items-start">
+          <div
+            class="history-btn bg-yellow-primary rounded-l-lg hover:scale-105 transition-all duration-300 ease-in-out shadow-md"
+          >
+            <img
+              src="assets/icons/history.svg"
+              alt="History"
+              class="w-16 cursor-pointer px-4 py-2"
+            />
+          </div>
+          <div class="history-content relative bg-white shadow-2xl">
+            <h2 class="text-center font-medium text-lg mt-2">History</h2>
+            <ul class="py-2 flex flex-col gap-4 w-64 h-64 overflow-auto"></ul>
+            <span
+              class="history-clear absolute bottom-2 right-4 bg-yellow-primary rounded-full shadow-md hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer p-2"
+              ><img src="assets/icons/trash.svg" alt="Clear" class="w-6"
+            /></span>
+          </div>
+        </div>
+      </div>
     </main>
     <section class="mt-6">
       <h1 class="m-auto text-center text-2xl">Exchange Rates</h1>
