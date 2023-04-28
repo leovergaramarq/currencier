@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- normalize css -->
     <link href="assets/css/normalize.css" rel="stylesheet" />
+    <link href="assets/css/styles.css" rel="stylesheet" />
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,18 +19,18 @@
     <script src="assets/js/tailwind.config.js" type="module"></script>
     <title>Currencier</title>
   </head>
-  <body class="font-poppins">
+  <body class="font-poppins min-h-screen pb-12">
     <header class="fixed top-0 w-screen z-10">
       <div class="relative h-12 bg-yellow-primary">
         <a
-          class="w-14 h-14 absolute transform -translate-x-1/2 left-1/2 bg-inherit rounded-full mt-0 p-1 cursor-pointer hover:scale-110 transition-all duration-300 ease-in-out"
+          class="w-14 h-14 absolute transform -translate-x-1/2 left-1/2 bg-inherit rounded-full p-1 cursor-pointer hover:scale-110 transition-all duration-300 ease-in-out"
           href="."
         >
           <img src="assets/icons/dollar.svg" alt="Logo" class="w-full h-full" />
         </a>
       </div>
     </header>
-    <main class="relative mt-8 bg-whitish h-80">
+    <main class="relative mt-12 bg-whitish h-80">
       <div
         class="converter absolute transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 w-4/5 mt-2"
       >
@@ -79,7 +80,6 @@
               />
               <div class="flex flex-col gap-2">
                 <div class="currency-code font-medium text-2xl"></div>
-                <!-- <div class="currency-name">Abcdefg Efghijk</div> -->
                 <div class="flex gap-1 max-w-full items-end">
                   <input
                     min="0"
@@ -143,7 +143,6 @@
               />
               <div class="flex flex-col gap-2">
                 <div class="currency-code font-medium text-2xl"></div>
-                <!-- <div class="currency-name">Abcdefg Efghijk</div> -->
                 <div class="flex gap-1 max-w-full items-end">
                   <input
                     min="0"
@@ -161,6 +160,15 @@
       </div>
       <div class="absolute right-0">kjk</div>
     </main>
+    <section class="mt-6">
+      <h1 class="m-auto text-center text-2xl">Exchange Rates</h1>
+      <table
+        class="m-auto mt-3 w-4/5 block overflow-x-auto overflow-y-scroll h-96 whitespace-nowrap"
+      >
+        <thead class=""></thead>
+        <tbody class=""></tbody>
+      </table>
+    </section>
     <script src="assets/js/index.js" type="module"></script>
   </body>
 </html>

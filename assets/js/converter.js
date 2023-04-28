@@ -1,6 +1,6 @@
-import { API_KEY } from "./config.js";
 import countryCurrencies from "../json/countryCurrencies.json" assert { type: "json" };
 import mock from "../json/conversions/usd.json" assert { type: "json" };
+import { fetchApi } from "./api.js";
 
 window.addEventListener("DOMContentLoaded", () => {
   // dom
@@ -9,9 +9,9 @@ window.addEventListener("DOMContentLoaded", () => {
   const $dropdowns = $sides.map(($side) => $side.querySelector(".dropdown"));
   const $inputs = $sides.map(($side) => $side.querySelector(".currency-value"));
   const $swapBtn = $converter.querySelector(".swap-btn");
+  const $table = document.querySelector("table");
 
-  selectCurrency(0, "USD");
-  selectCurrency(1, "EUR");
+  init();
 
   $dropdowns.forEach(($dropdown) => {
     const fragment = document.createDocumentFragment();
@@ -78,6 +78,12 @@ window.addEventListener("DOMContentLoaded", () => {
     closeDropdowns();
   });
 
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeDropdowns();
+    }
+  });
+
   $converter.addEventListener("input", async (e) => {
     const $element = e.target;
     for (let i = 0; i < $inputs.length; i++) {
@@ -97,20 +103,22 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  function init() {
+    selectCurrency(0, "USD", false);
+    selectCurrency(1, "EUR", false);
+    syncCurrenciesValues();
+    genTable();
+    updateTable();
+  }
+
   function swapCurrencies() {
     const temp = currencies[0];
-    // currencies[0].code = currencies[1].code;
-    // currencies[1].code = temp;
     currencies[0] = currencies[1];
     currencies[1] = temp;
     renderConverterSides();
-    // const tempValue = $inputs[0].value;
-    // $inputs[0].value = $inputs[1].value;
-    // $inputs[1].value = tempValue;
   }
 
-  function selectCurrency(indexSide, currencyCode) {
-    // const $side = $sides[indexSide];
+  function selectCurrency(indexSide, currencyCode, syncCurrencies = true) {
     const currency = countryCurrencies.find(
       ({ currency: { code } }) => code === currencyCode
     );
@@ -119,7 +127,9 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     currencies[indexSide].code = currency?.currency.code || currencyCode;
     renderConverterSide(indexSide);
-    syncCurrenciesValues();
+    if (syncCurrencies) {
+      syncCurrenciesValues();
+    }
   }
 
   function renderConverterSides() {
@@ -143,29 +153,11 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   async function syncCurrenciesValues() {
-    const rates = await fetchCurrencies();
+    const rates = await loadCurrencies();
     $inputs.forEach(($input, i) => {
-      currencies[i].value = +rates[currencies[i].code].toFixed(2);
-      $input.value = currencies[i].value;
+      currencies[i].value = +rates[currencies[i].code];
+      $input.value = currencies[i].value.toFixed(2);
     });
-  }
-
-  async function fetchCurrencies() {
-    // try {
-    //   const response = await fetch(
-    //     `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`
-    //   );
-    //   const data = await response.json();
-    //   if (data.result === "success") {
-    //     return data.conversion_rates;
-    //   }
-    //   throw new Error("Unable to fetch exchange rates");
-    // } catch (err) {
-    //   console.log("Error", err);
-    //   return mock.conversion_rates;
-    // }
-
-    return mock.conversion_rates;
   }
 
   function closeDropdowns() {
@@ -181,9 +173,72 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function updateTable() {}
+
+  function genTable() {
+    const $thead = $table.querySelector("thead");
+    const $tbody = $table.querySelector("tbody");
+    let $fragment = document.createDocumentFragment();
+
+    const keysRates = Object.keys(tempRates);
+
+    $fragment.appendChild(document.createElement("th"));
+    keysRates.forEach((currencyCode) => {
+      const $th = document.createElement("th");
+      const countryCode = countryCurrencies.find(
+        ({ currency: { code } }) => code === currencyCode
+      )?.country.code;
+      if (!countryCode) {
+        console.log("Not found", currencyCode);
+      }
+      $th.innerHTML = `
+        <div class="flex w-40 justify-center">
+          <img src="${getFlagLink(countryCode)}" alt="" class="h-6"/>
+          <div class="ml-2">${currencyCode}</div>
+        </div>
+      `;
+      $fragment.appendChild($th);
+    });
+    $thead.appendChild($fragment);
+
+    $fragment = document.createDocumentFragment();
+    keysRates.forEach((currencyCode1) => {
+      const $tr = document.createElement("tr");
+      const $th = document.createElement("th");
+      const countryCode = countryCurrencies.find(
+        ({ currency: { code } }) => code === currencyCode1
+      )?.country.code;
+      if (!countryCode) {
+        console.log("Not found", currencyCode1);
+      }
+      $th.innerHTML = `
+        <div class="flex w-28 justify-between py-1">
+          <img src="${getFlagLink(countryCode)}" alt="" class="h-6"/>
+          <div class="ml-2">${currencyCode1}</div>
+        </div>
+      `;
+      $tr.appendChild($th);
+      keysRates.forEach((currencyCode2) => {
+        const $td = document.createElement("td");
+        $td.classList = "text-center hover:bg-gray-100";
+        $td.textContent = (
+          tempRates[currencyCode2] / tempRates[currencyCode1]
+        ).toFixed(2);
+        $tr.appendChild($td);
+      });
+      $fragment.appendChild($tr);
+    });
+    $tbody.appendChild($fragment);
+  }
+
   async function getExchangeRate(currencyCode1, currencyCode2) {
-    const rates = await fetchCurrencies();
-    return rates[currencyCode2] / rates[currencyCode1];
+    return tempRates[currencyCode2] / tempRates[currencyCode1];
+  }
+
+  async function loadCurrencies() {
+    tempRates = await fetchApi();
+    updateTable();
+    return tempRates;
   }
 });
 
@@ -210,6 +265,7 @@ const currencies = [
     value: mock.conversion_rates.EUR,
   },
 ];
+let tempRates = mock.conversion_rates;
 let history = [];
 
 export {};
