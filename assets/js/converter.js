@@ -7,10 +7,11 @@ window.addEventListener("DOMContentLoaded", () => {
   const $converter = document.querySelector(".converter");
   const $sides = [...$converter.querySelectorAll(".converter-side")];
   const $dropdowns = $sides.map(($side) => $side.querySelector(".dropdown"));
+  const $inputs = $sides.map(($side) => $side.querySelector(".currency-value"));
   const $swapBtn = $converter.querySelector(".swap-btn");
 
   selectCurrency(0, "USD");
-  selectCurrency(1, "COP");
+  selectCurrency(1, "EUR");
 
   $dropdowns.forEach(($dropdown) => {
     const fragment = document.createDocumentFragment();
@@ -24,9 +25,9 @@ window.addEventListener("DOMContentLoaded", () => {
             countryCode
           )}" class="w-12" alt="South Africa" />
           <div class="flex gap-2 text-sm">
-            <div class="font-semibold">${currencyCode}</div>
+            <div class="curency-code font-semibold">${currencyCode}</div>
             <div>-</div>
-            <div>${currencyName}</div>
+            <div class="currency-name">${currencyName}</div>
           </div>    
         `;
         const $option = document.createElement("li");
@@ -77,6 +78,25 @@ window.addEventListener("DOMContentLoaded", () => {
     closeDropdowns();
   });
 
+  $converter.addEventListener("input", async (e) => {
+    const $element = e.target;
+    for (let i = 0; i < $inputs.length; i++) {
+      const $input = $inputs[i];
+      if (someParentEquals($element, $input)) {
+        currencies[i].value = +$input.value;
+        // console.log(currencies[i].value);
+        const idxOther = (i + 1) % 2;
+        const exchangeRate = await getExchangeRate(
+          currencies[i].code,
+          currencies[idxOther].code
+        );
+        currencies[idxOther].value = currencies[i].value * exchangeRate;
+        $inputs[idxOther].value = currencies[idxOther].value.toFixed(2);
+        return;
+      }
+    }
+  });
+
   function swapCurrencies() {
     const temp = currencies[0];
     // currencies[0].code = currencies[1].code;
@@ -84,7 +104,9 @@ window.addEventListener("DOMContentLoaded", () => {
     currencies[0] = currencies[1];
     currencies[1] = temp;
     renderConverterSides();
-    syncCurrenciesValues();
+    // const tempValue = $inputs[0].value;
+    // $inputs[0].value = $inputs[1].value;
+    // $inputs[1].value = tempValue;
   }
 
   function selectCurrency(indexSide, currencyCode) {
@@ -109,20 +131,23 @@ window.addEventListener("DOMContentLoaded", () => {
     const currency = countryCurrencies.find(
       ({ currency: { code } }) => code === currencies[indexSide].code
     );
-    $side.querySelector(".currency-code").textContent = currency.currency.code;
-    $side.querySelector(".currency-name").textContent = currency.currency.name;
-    $side.querySelector(".flag").src = getFlagLink(currency.country.code);
+    const $currencyInfo = $side.querySelector(".currency-info");
+    $currencyInfo.querySelector(".currency-code").textContent =
+      currency.currency.code;
+    $currencyInfo.querySelector(".currency-name").textContent =
+      currency.currency.name;
+    $currencyInfo.querySelector(".flag").src = getFlagLink(
+      currency.country.code
+    );
+    $inputs[indexSide].value = currencies[indexSide].value.toFixed(2);
   }
 
   async function syncCurrenciesValues() {
-    try {
-      const rates = await fetchCurrencies();
-      $sides.forEach(($side, i) => {
-        currencies[i].value = rates[currencies[i].code];
-        const $currencyValue = $side.querySelector(".currency-value");
-        $currencyValue.value = currencies[i].value;
-      });
-    } catch (err) {}
+    const rates = await fetchCurrencies();
+    $inputs.forEach(($input, i) => {
+      currencies[i].value = +rates[currencies[i].code].toFixed(2);
+      $input.value = currencies[i].value;
+    });
   }
 
   async function fetchCurrencies() {
@@ -155,6 +180,11 @@ window.addEventListener("DOMContentLoaded", () => {
       $dropdownContent.classList.add("hidden");
     }
   }
+
+  async function getExchangeRate(currencyCode1, currencyCode2) {
+    const rates = await fetchCurrencies();
+    return rates[currencyCode2] / rates[currencyCode1];
+  }
 });
 
 function someParentEquals(element, toCompare) {
@@ -176,8 +206,8 @@ const currencies = [
     value: mock.conversion_rates.USD,
   },
   {
-    code: "COP",
-    value: mock.conversion_rates.COP,
+    code: "EUR",
+    value: mock.conversion_rates.EUR,
   },
 ];
 let history = [];
