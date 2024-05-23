@@ -2,7 +2,7 @@ import { API_KEY } from "./config.js";
 import mock from "../json/conversions/usd.json" assert { type: "json" };
 
 export async function fetchApi() {
-  return mock.conversion_rates;
+  // return mock.conversion_rates;
   try {
     const response = await fetch(
       `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`
